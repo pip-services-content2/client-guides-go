@@ -62,7 +62,7 @@ func (c *GuidesClientFixtureV1) TestCrudOperations(t *testing.T) {
 	assert.Nil(t, err)
 
 	assert.NotNil(t, page)
-	assert.Len(t, len(page.Data), 2)
+	assert.Len(t, page.Data, 2)
 
 	// Update the guide
 	guide1.App = "New App 1"
