@@ -87,7 +87,17 @@ func (c *GuidesMockClientV1) GetGuides(ctx context.Context, correlationId string
 }
 
 func (c *GuidesMockClientV1) GetRandomGuide(ctx context.Context, correlationId string, filter *data.FilterParams) (*GuideV1, error) {
-	buf := *c.guides[random.Integer.Next(0, len(c.guides))]
+	filterFunc := c.composeFilter(filter)
+
+	items := make([]*GuideV1, 0)
+	for _, v := range c.guides {
+		item := v
+		if filterFunc(item) {
+			items = append(items, item)
+		}
+	}
+
+	buf := *items[random.Integer.Next(0, len(items))]
 	return &buf, nil
 }
 
